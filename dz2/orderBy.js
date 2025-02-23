@@ -1,4 +1,4 @@
-export function orderBy(arr, props) 
+function orderBy(arr, props) 
 {
     if (!Array.isArray(arr)) {
         throw new TypeError('First argument must be an array');
@@ -23,3 +23,5 @@ export function orderBy(arr, props)
         return 0;
     });
 }
+
+module.exports = orderBy;
