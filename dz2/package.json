@@ -1,0 +1,12 @@
+{
+  "name": "dz_2",
+  "version": "1.0.0",
+  "main": "orderBy.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
