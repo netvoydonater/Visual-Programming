@@ -1,4 +1,4 @@
-export async function loadData()
+async function loadData()
 {
     let url="https://catfact.ninja/breeds";
     let allData = [];
@@ -12,3 +12,5 @@ export async function loadData()
     }
     return allData;
 }
+
+module.exports = { loadData };

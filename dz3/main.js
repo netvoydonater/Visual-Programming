@@ -1,8 +1,10 @@
-import { loadData } from "./loadData.js";
-import { calcStats } from "./calcStats.js";
+const { loadData } = require("./loadData");
+const { calcStats } = require("./calcStats");
 
-export async function calcStatsFromAPI()
+async function calcStatsFromAPI()
 {
     const data = await loadData();
     return calcStats(data);
 }
+
+module.exports = { calcStatsFromAPI };

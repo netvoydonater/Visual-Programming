@@ -1,7 +1,7 @@
-export function calcStats(catsInfo)
+function calcStats(catsInfo)
 {
     const stats = {};
-    calcInfo.forEach(({ country }) => {
+    catsInfo.forEach(({ country }) => {
         if (stats[country])
         {
             stats[country] += 1;
@@ -13,3 +13,5 @@ export function calcStats(catsInfo)
     });
     return stats;
 }
+
+module.exports = { calcStats };
