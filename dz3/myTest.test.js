@@ -1,9 +1,10 @@
+
 const { calcStatsFromAPI } = require("./main");
 
 test("calcStatsFromAPI fetch mock", async () => {
     const mockData = [
         { breed: "Turkish Van", country: "United Kingdom" },
-        { breed: "Russian Blue", country: "Russia" }
+        { breed: "York Chocolate", country: "United States (New Yourk)" }
     ];
     
     jest.spyOn(global, "fetch").mockImplementation(() =>
@@ -13,7 +14,7 @@ test("calcStatsFromAPI fetch mock", async () => {
     );
     
     const stats = await calcStatsFromAPI();
-    expect(stats).toEqual({ "United Kingdom": 1, "Russia": 1 });
+    expect(stats).toEqual({ "United Kingdom": 1, "United States (New Yourk)": 1 });
     
     global.fetch.mockRestore();
 });
