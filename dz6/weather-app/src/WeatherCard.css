@@ -1,0 +1,27 @@
+.weather-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+  
+  .weather-card h3 {
+    font-size: 1.2em;
+  }
+  
+  .weather-info {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .day, .night {
+    text-align: center;
+  }
+  
+  .day img, .night img {
+    width: 40px;
+    height: 40px;
+  }
