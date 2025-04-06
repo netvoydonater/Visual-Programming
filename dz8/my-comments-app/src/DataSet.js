@@ -4,11 +4,12 @@ import './DataSet.css';
 const DataSet = ({
   headers = [],
   data = [],
+  selectedRows = [],
   renderHeader = (header) => header.label || header.key,
   renderCell = (value) => value,
   onRowEdit = () => {},
+  onRowSelection = () => {}
 }) => {
-  const [selectedRows, setSelectedRows] = useState([]);
   const [editingRow, setEditingRow] = useState(null);
   const [editData, setEditData] = useState({});
 
@@ -17,22 +18,6 @@ const DataSet = ({
     : data.length > 0
       ? Object.keys(data[0]).map((key) => ({ key, label: key }))
       : [];
-
-  const handleRowSelection = (rowIndex, event) => {
-    const isCtrlPressed = event.ctrlKey || event.metaKey;
-
-    if (isCtrlPressed) {
-      setSelectedRows((prev) =>
-        prev.includes(rowIndex)
-          ? prev.filter((index) => index !== rowIndex)
-          : [...prev, rowIndex]
-      );
-    } else {
-      setSelectedRows((prev) =>
-        prev.includes(rowIndex) ? [] : [rowIndex]
-      );
-    }
-  };
 
   const handleEditStart = (rowIndex, rowData) => {
     setEditingRow(rowIndex);
@@ -66,12 +51,12 @@ const DataSet = ({
       <tbody>
         {data.map((row, rowIndex) => (
           <tr
-            key={rowIndex}
+            key={row.id || rowIndex}
             className={selectedRows.includes(rowIndex) ? 'selected' : ''}
           >
             <td
               className="selection-column"
-              onClick={(event) => handleRowSelection(rowIndex, event)}
+              onClick={(event) => onRowSelection(rowIndex, event)}
             >
               {selectedRows.includes(rowIndex) && '✓'}
             </td>
@@ -88,14 +73,14 @@ const DataSet = ({
                 )}
               </td>
             ))}
-            <td>
+            <td className="actions-cell">
               {editingRow === rowIndex ? (
                 <>
-                  <button onClick={handleEditSave}>Save</button>
-                  <button onClick={handleEditCancel}>Cancel</button>
+                  <button className="save-btn" onClick={handleEditSave}>Save</button>
+                  <button className="cancel-btn" onClick={handleEditCancel}>Cancel</button>
                 </>
               ) : (
-                <button onClick={() => handleEditStart(rowIndex, row)}>Edit</button>
+                <button className="edit-btn" onClick={() => handleEditStart(rowIndex, row)}>Edit</button>
               )}
             </td>
           </tr>

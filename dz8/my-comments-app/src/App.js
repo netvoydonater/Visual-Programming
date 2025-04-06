@@ -11,13 +11,13 @@ function App() {
     email: '',
     body: '',
   });
-  const [selectedRows, setSelectedRows] = useState([]); // Добавлено состояние для выбранных строк
+  const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/comments');
-        if (!response.ok) throw new Error('Failed to fetch');
+        const response = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=20');
+        if (!response.ok) throw new Error('Failed to fetch comments');
         const data = await response.json();
         setComments(data);
       } catch (err) {
@@ -31,74 +31,71 @@ function App() {
   }, []);
 
   const handleAddComment = async () => {
-    const tempId = Date.now(); // Перемещено внутрь функции
+    const tempId = Date.now();
     try {
-      // Оптимистичное обновление
-      const optimisticComment = { ...newComment, id: tempId };
+      const optimisticComment = {
+        ...newComment,
+        id: tempId,
+        postId: 1
+      };
+      
       setComments(prev => [...prev, optimisticComment]);
       setNewComment({ name: '', email: '', body: '' });
 
-      // Отправка на сервер
       const response = await fetch('https://jsonplaceholder.typicode.com/comments', {
         method: 'POST',
-        body: JSON.stringify(newComment),
+        body: JSON.stringify({
+          ...newComment,
+          postId: 1
+        }),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },
       });
 
       if (!response.ok) throw new Error('Failed to add comment');
-
+      
       const serverComment = await response.json();
-      // Заменяем временный ID на серверный
       setComments(prev => prev.map(c => c.id === tempId ? serverComment : c));
     } catch (err) {
       setError(err.message);
-      // Откатываем изменения при ошибке
       setComments(prev => prev.filter(c => c.id !== tempId));
     }
   };
 
-  const handleDeleteComments = async () => { // Упростим функцию
-    const selectedIds = comments
-      .filter((_, index) => selectedRows.includes(index))
-      .map(comment => comment.id);
-      
-    if (selectedIds.length === 0) return;
+  const handleDeleteComments = async () => {
+    if (selectedRows.length === 0 || !window.confirm('Удалить выбранные комментарии?')) return;
 
+    const idsToDelete = selectedRows.map(index => comments[index].id);
+    const originalComments = [...comments];
+    
     try {
       // Оптимистичное удаление
-      setComments(prev => prev.filter(comment => !selectedIds.includes(comment.id)));
+      setComments(prev => prev.filter((_, index) => !selectedRows.includes(index)));
+      setSelectedRows([]);
 
-      // Отправка на сервер
-      const responses = await Promise.all(
-        selectedIds.map(id => 
-          fetch(`https://jsonplaceholder.typicode.com/comments/${id}`, {
-            method: 'DELETE',
-          })
-        )
+      const deletePromises = idsToDelete.map(id => 
+        fetch(`https://jsonplaceholder.typicode.com/comments/${id}`, {
+          method: 'DELETE',
+        })
       );
 
-      if (responses.some(r => !r.ok)) throw new Error('Failed to delete some comments');
+      await Promise.all(deletePromises);
     } catch (err) {
       setError(err.message);
-      // Восстанавливаем данные при ошибке
-      const response = await fetch('https://jsonplaceholder.typicode.com/comments');
-      const data = await response.json();
-      setComments(data);
+      setComments(originalComments);
     }
   };
 
   const handleUpdateComment = async (updatedComment) => {
+    const originalComments = [...comments];
     try {
-      // Оптимистичное обновление
       setComments(prev => 
         prev.map(comment => 
           comment.id === updatedComment.id ? updatedComment : comment
         )
       );
 
-      // Отправка на сервер
       const response = await fetch(
         `https://jsonplaceholder.typicode.com/comments/${updatedComment.id}`,
         {
@@ -113,10 +110,7 @@ function App() {
       if (!response.ok) throw new Error('Failed to update comment');
     } catch (err) {
       setError(err.message);
-      // Восстанавливаем данные при ошибке
-      const response = await fetch('https://jsonplaceholder.typicode.com/comments');
-      const data = await response.json();
-      setComments(data);
+      setComments(originalComments);
     }
   };
 
@@ -124,13 +118,13 @@ function App() {
     const isCtrlPressed = event.ctrlKey || event.metaKey;
 
     if (isCtrlPressed) {
-      setSelectedRows((prev) =>
+      setSelectedRows(prev =>
         prev.includes(rowIndex)
-          ? prev.filter((index) => index !== rowIndex)
+          ? prev.filter(index => index !== rowIndex)
           : [...prev, rowIndex]
       );
     } else {
-      setSelectedRows((prev) =>
+      setSelectedRows(prev =>
         prev.includes(rowIndex) ? [] : [rowIndex]
       );
     }
@@ -140,19 +134,19 @@ function App() {
     { key: 'id', label: 'ID' },
     { key: 'name', label: 'Name' },
     { key: 'email', label: 'Email' },
-    { key: 'body', label: 'Body' },
+    { key: 'body', label: 'Comment' },
   ];
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="loading">Loading comments...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <div className="app">
-      <h1>Comments Table</h1>
+      <h1>Comments Management</h1>
       
       <div className="add-comment">
         <h2>Add New Comment</h2>
-        <div>
+        <div className="form-group">
           <input
             type="text"
             placeholder="Name"
@@ -166,7 +160,7 @@ function App() {
             onChange={(e) => setNewComment({...newComment, email: e.target.value})}
           />
           <textarea
-            placeholder="Body"
+            placeholder="Comment text"
             value={newComment.body}
             onChange={(e) => setNewComment({...newComment, body: e.target.value})}
           />
@@ -178,19 +172,21 @@ function App() {
         <button 
           onClick={handleDeleteComments}
           disabled={selectedRows.length === 0}
+          className="delete-btn"
         >
-          Delete Selected
+          Delete Selected ({selectedRows.length})
         </button>
       </div>
 
       <DataSet
         headers={headers}
         data={comments}
+        selectedRows={selectedRows}
         onRowEdit={handleUpdateComment}
-        onRowSelection={handleRowSelection} // Передаем обработчик выбора строк
+        onRowSelection={handleRowSelection}
       />
 
-      {error && <div className="error">{error}</div>}
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 }
