@@ -1,0 +1,100 @@
+/* Base table styles */
+.dataset-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Table header styles */
+  .dataset-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+  }
+  
+  .dataset-table th,
+  .dataset-table td {
+    padding: 12px 15px;
+  }
+  
+  .dataset-table th {
+    position: sticky;
+    top: 0;
+    background-color: #009879;
+  }
+  
+  /* Table body styles */
+  .dataset-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  .dataset-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .dataset-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+  
+  /* Selected row style */
+  .dataset-table tbody tr.selected {
+    background-color: #e6f7ff;
+    font-weight: bold;
+    color: #009879;
+  }
+  
+  /* Hover effect */
+  .dataset-table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  /* Selection column styles */
+  .selection-column {
+    width: 40px;
+    text-align: center;
+  }
+  
+  /* Edit input styles */
+  .dataset-table input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Action buttons styles */
+  .dataset-table button {
+    padding: 6px 12px;
+    margin: 0 2px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+  }
+  
+  .dataset-table button:first-child {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .dataset-table button:last-child {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .dataset-table {
+      font-size: 0.8em;
+    }
+    
+    .dataset-table th,
+    .dataset-table td {
+      padding: 8px 10px;
+    }
+  }
