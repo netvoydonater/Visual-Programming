@@ -1,0 +1,77 @@
+.app {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .dataset-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .dataset-table th, .dataset-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .dataset-table th {
+    background-color: #635656;
+  }
+  
+  .dataset-table tr.selected {
+    background-color: #e6f7ff;
+  }
+  
+  .selection-column {
+    width: 30px;
+    text-align: center;
+  }
+  
+  .add-comment {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .add-comment input,
+  .add-comment textarea {
+    display: block;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .add-comment button {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .actions {
+    margin: 15px 0;
+  }
+  
+  .actions button {
+    padding: 8px 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .actions button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
