@@ -1,0 +1,31 @@
+.dataset-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  .dataset-table th,
+  .dataset-table td {
+    border: 1px solid #030303;
+    border-radius: 3px;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .dataset-table th {
+    background-color: #95e3ce;
+  }
+  
+  .selection-column {
+    width: 30px;
+    background-color: #95e3ce;
+    cursor: pointer;
+  }
+  
+  .selection-column:hover {
+    background-color: #a1e395;
+  }
+  
+  .dataset-table tr.selected {
+    background-color: #a1e395;
+  }
