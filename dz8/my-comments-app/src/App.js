@@ -16,10 +16,10 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=20');
+        const response = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=20'); //менять количество выводимых строк в таблице можно в ".../comments?_limit=<кол-во строк>"
         if (!response.ok) throw new Error('Failed to fetch comments');
         const data = await response.json();
-        setComments(data);
+        setComments(data);  
       } catch (err) {
         setError(err.message);
       } finally {
