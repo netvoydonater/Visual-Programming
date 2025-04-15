@@ -1,97 +1,219 @@
-.app {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+/* Основные стили приложения */
+.app-container {
+  display: flex;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
 }
 
-.loading {
-  text-align: center;
-  font-size: 1.2rem;
-  margin-top: 50px;
+/* Навигационная панель */
+.navigation {
+  width: 250px;
+  background-color: #f8f9fa;
+  height: 100vh;
+  position: fixed;
+  padding: 20px 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.error {
-  color: #d32f2f;
-  background-color: #ffebee;
-  padding: 15px;
+.navigation ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation li {
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.navigation li:hover {
+  background-color: #e9ecef;
+}
+
+.navigation a {
+  text-decoration: none;
+  color: #212529;
+  font-size: 1rem;
+  display: block;
+}
+
+.navigation a.active {
+  color: #ffffff;
+  background-color: #007bff;
   border-radius: 4px;
-  margin: 20px 0;
+  margin: 0 10px;
+  padding: 8px 10px;
 }
 
-.add-comment {
-  background-color: #f5f5f5;
+/* Основное содержимое */
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 250px;
+  background-color: #ffffff;
+}
+
+/* Заголовки страниц */
+.page-title {
+  color: #343a40;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Формы */
+.add-form {
+  background-color: #f8f9fa;
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 30px;
-}
-
-.add-comment h2 {
-  margin-top: 0;
-  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
   gap: 15px;
 }
 
-.form-group input,
-.form-group textarea {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
+.form-row label {
+  font-weight: 500;
+  color: #495057;
 }
 
-.form-group textarea {
-  min-height: 100px;
+.form-control {
+  padding: 10px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+textarea.form-control {
+  min-height: 120px;
   resize: vertical;
 }
 
-.form-group button {
-  align-self: flex-start;
+/* Кнопки */
+.btn {
   padding: 10px 20px;
-  background-color: #4caf50;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
 }
 
-.form-group button:hover {
-  background-color: #388e3c;
+.btn-primary:hover {
+  background-color: #0069d9;
 }
 
-.actions {
-  margin: 20px 0;
-}
-
-.delete-btn {
-  padding: 10px 20px;
-  background-color: #f44336;
+.btn-danger {
+  background-color: #dc3545;
   color: white;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
 }
 
-.delete-btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+.btn-danger:hover {
+  background-color: #c82333;
 }
 
-.delete-btn:hover:not(:disabled) {
-  background-color: #d32f2f;
+/* Сообщения */
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #6c757d;
 }
 
-.error-message {
-  color: #d32f2f;
-  background-color: #ffebee;
+.error-text {
+  color: #dc3545;
+  background-color: #f8d7da;
   padding: 15px;
   border-radius: 4px;
-  margin-top: 20px;
+  margin: 15px 0;
+  border: 1px solid #f5c6cb;
+}
+
+/* Таблица */
+.dataset-container {
+  overflow-x: auto;
+}
+
+.dataset-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.95rem;
+}
+
+.dataset-table thead tr {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.dataset-table th,
+.dataset-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.dataset-table th {
+  position: sticky;
+  top: 0;
+}
+
+.dataset-table tbody tr {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.dataset-table tbody tr:nth-of-type(even) {
+  background-color: #f8f9fa;
+}
+
+.dataset-table tbody tr:last-of-type {
+  border-bottom: 2px solid #007bff;
+}
+
+.dataset-table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  
+  .navigation {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  
+  .content {
+    margin-left: 0;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
 }
