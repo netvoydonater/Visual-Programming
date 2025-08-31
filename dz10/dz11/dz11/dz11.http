@@ -1,0 +1,37 @@
+### GET request to example server
+GET http://localhost:5035/comments
+
+###
+
+GET http://localhost:5035/comments/1
+
+###
+
+DELETE http://localhost:5035/comments/1
+
+###
+
+PATCH http://localhost:5035/comments/1
+Content-Type: application/json
+Accept-Language: en-US, en;q=0.5
+
+
+  {
+    "postId": 1,
+    "name": "Hello",
+    "email": "Jayne_Kuhic@sydney.com",
+    "body": "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et"
+  }
+###
+
+POST http://localhost:5035/comments
+Content-Type: application/json
+Accept-Language: en-US, en;q=0.5
+
+
+  {
+    "postId": 1,
+    "name": "quo vero reiciendis velit similique earum",
+    "email": "Jayne_Kuhic@sydney.com",
+    "body": "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et"
+  }
